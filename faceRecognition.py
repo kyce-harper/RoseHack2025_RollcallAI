@@ -1,13 +1,14 @@
 import cv2
 import numpy as np
 import os
-from flask import Flask, request, jsonify
+# from flask import Flask, Response, request, jsonify
+# from flask_cors import CORS
 from cameraCapture import cameraCap
 
-app = Flask(__name__)
+# app = Flask(__name__)
+# CORS(app)
 
-if os.stat("Trainer.yml").st_size == 0:
-    cameraCap()
+
 
 def scan():
     capture = cv2.VideoCapture(0)
@@ -35,7 +36,7 @@ def scan():
                     name = file.readline()
                 capture.release()
                 cv2.destroyAllWindows()
-                return {"Serial": serial, "Name": name, "status":"recognized"} 
+                #return {"Serial": serial, "Name": name, "status":"recognized"} 
             else:
                 print(timer)
                 timer += 1
@@ -43,6 +44,29 @@ def scan():
                     capture.release()
                     cv2.destroyAllWindows()
                     cameraCap()
-                    return {"status":"memorized yo face lol"}
-
+                    #return {"status":"memorized yo face lol"}
+            
+if os.stat("Trainer.yml").st_size == 0:
+    cameraCap()
+else:
+    scan()
+    
+    
+# @app.route('/save-name', methods=['POST'])
+# def saveName():
+#     data = request.get_json()
+#     if not data:
+#             return jsonify({"error": "No JSON data received"}), 400
+#     name = data.get('text1')
+#     #schedule = data.get('text2')
+    
+#     try:
+#         with open("names.txt", "a") as file:
+#             file.write(name + "\n")
+#         return jsonify({"message": "Name saved successfully!"}), 200
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+# if __name__ == "__main__":
+#     app.run(debug=True)
 #print(test())

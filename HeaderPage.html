@@ -192,22 +192,6 @@
         window.location.href='Main.html'
       }
       </script> -->
-      <script>
-        document.getElementById("runPythonButton").addEventListener("click", () => {
-          fetch("http://127.0.0.1:5000/run-python", { // Match the backend's endpoint
-              method: "POST",
-          })
-              .then((response) => response.json())
-              .then((data) => {
-                  // Display output
-                  document.getElementById("output").textContent =
-                      "Output:\n" + data.stdout + "\n\nErrors:\n" + data.stderr;
-              })
-              .catch((error) => {
-                  console.error("Error:", error);
-              });
-      });
-      </script>
 
     </div>
     <div class="card-right">
@@ -219,8 +203,43 @@
           <span>Press Begin</span>
         </div>
         <div class="dots">
-            <button class="start-button" id="runPythonButton" onclick="window.location.href='Main.html'">Begin Scan</button>
+            <button class="start-button" id="runPythonButton">Begin Scan</button>
+
+            <script>
+              document.getElementById("runPythonButton").addEventListener("click", async () => {
+                try {
+                  // Trigger the backend route
+                  const response = await fetch("http://127.0.0.1:5000/run-python", { 
+                    method: "POST",
+                  });
+            
+                  // Check if the response is successful
+                  if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+            
+                  // Parse the JSON response
+                  const data = await response.json();
+            
+                  // Log the server's output
+                  console.log("Python Script Output:", data);
+            
+                  // Optionally display success message or handle errors
+                  if (data.stderr) {
+                    alert("Error running Python script: " + data.stderr);
+                  } else {
+                    //alert("Python script ran successfully: " + data.stdout);
+                    // Redirect after successful execution (if needed)
+                    window.location.href = "Main.html";
+                  }
+                } catch (error) {
+                  console.error("Error calling backend route:", error);
+                  alert("Failed to run the Python script. Check the console for details.");
+                }
+              });
+            </script>
         </div>
+
       </div>
     </div>
   </div>

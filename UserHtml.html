@@ -114,6 +114,24 @@
     .back-button:hover {
       background-color: #2a5a6d;
     }
+    .overlay-image {
+      position: absolute;
+      bottom: 9.5%;
+      right: 6%;
+      width: 20vw; /* 5% of the viewport width */
+      height: auto;
+      z-index: 9999; /* Ensure it's on top */
+      opacity: 50%;
+    }
+    .top_overlay-image {
+      position: absolute;
+      top: 9.5%;
+      left: 6%;
+      width: 20vw; /* 5% of the viewport width */
+      height: auto;
+      z-index: 9999; /* Ensure it's on top */
+      opacity: 50%;
+    }
   </style>
 </head>
 <body>
@@ -141,6 +159,8 @@
         </div>
         <button class="back-button" onclick="window.location.href='main.html'">Back to Main Page</button>
       </div>
+      <img src="Decals/Decal_1.png" alt="Overlay" class="overlay-image">
+      <img src="Decals/Decal_2.png" alt="Overlay" class="overlay-image">
     </div>
   </div>
 

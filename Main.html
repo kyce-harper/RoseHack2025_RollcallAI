@@ -18,6 +18,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      position: relative; /* To allow positioning of the image overlay */
     }
     .card-container {
       display: flex;
@@ -125,6 +126,17 @@
         background: #d1e9f2;
       }
     }
+
+    /* Image Overlay Styles */
+    .overlay-image {
+      position: absolute;
+      bottom: 4.5%;
+      right: 3.5%;
+      width: 25vw; /* 5% of the viewport width */
+      height: auto;
+      z-index: 9999; /* Ensure it's on top */
+      opacity: 50%;
+    }
   </style>
 </head>
 <body>
@@ -161,5 +173,7 @@
       </div>
     </div>
   </div>
+
+  <img src="Decals/Decal_1.png" alt="Overlay" class="overlay-image">
 </body>
 </html>

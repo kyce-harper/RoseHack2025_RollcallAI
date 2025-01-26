@@ -66,3 +66,4 @@ int readUser(const std::string& file) {
     newUser->printInfo();
     delete newUser;
 }
+

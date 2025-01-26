@@ -17,3 +17,4 @@ async function getInsight() {
     document.getElementById('insight').innerText = data.insight;
   }
   window.onload = getInsight;
+

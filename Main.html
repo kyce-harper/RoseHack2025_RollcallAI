@@ -143,17 +143,35 @@
   <div class="card-container">
     <div class="card-left">
       <div class="camera-wrapper">
-        <video id="camera" autoplay aria-label="Webcam view for facial recognition"></video>
+        <!-- <video id="camera" autoplay aria-label="Webcam view for facial recognition"></video> -->
+         <img id="camera" alt="webcam feed via opencv"/>
       </div>
+      //<script>
+      //  const camera = document.getElementById("camera");
+      //  camera.src = "http://127.0.0.1:5000/video_feed";
+        //navigator.mediaDevices.getUserMedia({ video: true })
+        //  .then(stream => {
+        //    camera.srcObject = stream;
+        //  })
+        //  .catch(error => {
+        //    console.error("Error accessing webcam:", error);
+        //  });
+      //</script>
       <script>
-        const camera = document.getElementById("camera");
-        navigator.mediaDevices.getUserMedia({ video: true })
-          .then(stream => {
-            camera.srcObject = stream;
-          })
-          .catch(error => {
-            console.error("Error accessing webcam:", error);
-          });
+        function switchPageAfterDelay() {
+          // Set the delay in milliseconds (e.g., 5000ms = 5 seconds)
+          const delay = 7000;
+        
+          // Use setTimeout to change the page after the delay
+          setTimeout(function() {
+            // Switch to the new page (for example, NewUser.html)
+            window.location.href = "NewUser.html";
+          }, delay);
+        }
+
+        window.onload = function() {
+          switchPageAfterDelay(); // Automatically switch page when the page loads
+        };
       </script>
     </div>
     <div class="card-right">

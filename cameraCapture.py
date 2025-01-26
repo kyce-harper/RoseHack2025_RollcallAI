@@ -1,7 +1,11 @@
 import cv2
 import numpy as np
+#from flask import Flask, Response, request, jsonify
 
 from trainingModel import trainUser
+
+#app = Flask(__name__)
+
 
 def cameraCap():
     capture = cv2.VideoCapture(0)
@@ -19,20 +23,22 @@ def cameraCap():
 
         while True:
             ret, frame = capture.read()
+            
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #converts the image (video-captured image) into grayscale
 
             #1.3 (2nd parameter) is the scale factor. You must change the size of the image so that haar-cascade can compare it to. the scale factor tells how much to shrink the image to
             # next paramter (5) is the min_neighbor. it's the parameter that teels haar-cascade how many "neighbors" of potential faces to retain it
-            faces = faceCap.detectMultiScale(gray, 1.4, 1) #returns the position of all the faces that is detected
+            faces = faceCap.detectMultiScale(gray, 1.4, 6) #returns the position of all the faces that is detected
             # x,y,w,h are the dimensions of the rectangle that are gonna be drawn around a face
             for (x,y,w,h) in faces:
                 count += 1
                 cv2.imwrite("datasets/User." + str(id) + "." + str(count) + ".jpg", gray[y:y+h, x:x+w])
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 5) # draws a rectangle from the starting corner (x, y) to the end/opposite corner (x + w, y + h). And then it's just the color and thickness
-
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3) # draws a rectangle from the starting corner (x, y) to the end/opposite corner (x + w, y + h). And then it's just the color and thickness
+            
             cv2.imshow("video", frame)
+            
 
-            if count > 200:
+            if cv2.waitKey(1) == ord('q') or count > 200:
                 break
     
     finally:   
@@ -50,3 +56,35 @@ def cameraCap():
         file.write(n + "\n")
     
     trainUser()
+    
+# @app.route('/return-success', methods=['POST'])
+# def returnSuccess():
+#     data = request.json
+#if __name__ == "__main__":
+#    app.run(debug=True)
+    
+    
+
+# @app.route('/save-name', methods=['POST'])
+# def saveName():
+#     data = request.json
+#     name = data.get('name')
+    
+#     try:
+#         with open("names.txt", "a") as file:
+#             file.write(name + "\n")
+#         return jsonify({"message": "Name saved successfully!"}), 200
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+# if __name__ == "__main__":
+#     app.run(debug=True)
+        
+#cameraCap()
+
+# @app.route('/video_feed')
+# def video_feed():
+#     return Response(cameraCap(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# if __name__ == "__main__":
+#     app.run(debug=True)

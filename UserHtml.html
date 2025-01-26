@@ -134,6 +134,39 @@
     }
   </style>
 </head>
+<script>
+    async function getInsight() {
+      try {
+        const userSchedule = [
+          { subject: "Math 101", time: "9:00 AM" },
+          { subject: "CS 202", time: "11:00 AM" },
+          { subject: "History 301", time: "1:00 PM" },
+        ]; // Replace with the actual schedule object
+
+        const response = await fetch('http://127.0.0.1:5000', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ schedule: userSchedule }),
+        });
+
+        const data = await response.json();
+        if (data.error) {
+          console.error("Error:", data.error);
+          document.getElementById('insight').innerText = "Error fetching insight.";
+          return;
+        }
+
+        document.getElementById('insight').innerText = data.insight;
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('insight').innerText = "Error fetching insight.";
+      }
+    }
+
+    window.onload = getInsight;
+  </script>
 <body>
   <div class="card-container">
     <div class="card-left">
@@ -157,7 +190,7 @@
           <h3>Insight:</h3>
           <p class="insight" id="insight">Loading insight...</p>
         </div>
-        <button class="back-button" onclick="window.location.href='main.html'">Back to Main Page</button>
+        <button class="back-button" onclick="window.location.href='HeaderPage.html'">Back to Main Page</button>
       </div>
       <img src="Decals/Decal_1.png" alt="Overlay" class="overlay-image">
       <img src="Decals/Decal_2.png" alt="Overlay" class="overlay-image">

@@ -166,6 +166,49 @@
             console.error("Error accessing webcam:", error);
           });
       </script>
+      <!-- <script>
+        async function callScanAPI(){
+          try {
+            const response = await fetch("http://127.0.0.1:5000/scan");
+            if(!response.ok){
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Scan Result:', data);
+
+            if (data.status === "recognized") {
+              alert(`Face recognized! Name: ${data.name}`);
+            } else {
+                alert(data.message);
+            }
+          } catch (error) {
+              console.error('Error calling scan API:', error);
+          }
+        }
+        
+      function buttonScan(){
+        callScanAPI()
+        window.location.href='Main.html'
+      }
+      </script> -->
+      <script>
+        document.getElementById("runPythonButton").addEventListener("click", () => {
+          fetch("http://127.0.0.1:5000/run-python", { // Match the backend's endpoint
+              method: "POST",
+          })
+              .then((response) => response.json())
+              .then((data) => {
+                  // Display output
+                  document.getElementById("output").textContent =
+                      "Output:\n" + data.stdout + "\n\nErrors:\n" + data.stderr;
+              })
+              .catch((error) => {
+                  console.error("Error:", error);
+              });
+      });
+      </script>
+
     </div>
     <div class="card-right">
       <div class="container">
@@ -176,7 +219,7 @@
           <span>Press Begin</span>
         </div>
         <div class="dots">
-            <button class="start-button" onclick="window.location.href='Main.html'">Begin Scan</button>
+            <button class="start-button" id="runPythonButton" onclick="window.location.href='Main.html'">Begin Scan</button>
         </div>
       </div>
     </div>
